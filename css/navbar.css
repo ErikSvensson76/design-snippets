@@ -1,0 +1,183 @@
+
+:root {
+    /* .85 sets transparency */
+    --background: rgba(0, 214, 170, .85)
+}
+
+*,*::before, *::after{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    background: #333;
+    font-family: sans-serif;
+    font-weight: 400;
+    letter-spacing: 2px;
+}
+
+.content{
+    background-color: #333;
+    display: grid;
+}
+
+/* Navigation styling */
+header{
+    background: var(--background);
+    text-align: center;
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+}
+
+.nav-toggle{
+    display: none;
+}
+
+.nav-toggle-label{
+    position: absolute;
+    display: flex;
+    align-items: center; 
+    top: 0;
+    left: 0;
+    margin-left: 1em;    
+    height: 100%;       
+}
+
+.nav-toggle-label span,
+.nav-toggle-label span::before,
+.nav-toggle-label span::after{
+    display: block;
+    background: white;
+    height: 2px;
+    width: 2em;
+    border-radius: 2px;
+    position: relative;
+}
+
+.nav-toggle-label span::before,
+.nav-toggle-label span::after{
+    content: ''; /* If i dont have this nothing will be displayed */ 
+    position: absolute;
+}
+
+.nav-toggle-label span::before{
+    bottom: 8px;
+}
+
+.nav-toggle-label span::after{
+    top: 8px;
+}
+
+nav{
+    position: absolute;
+    text-align: left;
+    top: 100%;
+    left: 0;
+    background: var(--background);
+    width: 100%;
+    /*
+    1 stays at original width
+    0 means no height thus hidden
+    */
+    transform: scale(1, 0);
+    transform-origin: top;
+    transition: transform 150ms ease-in-out;       
+}
+
+nav ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;    
+}
+
+nav li{
+    margin-bottom: 1em;
+    margin-left: 1em;
+}
+
+nav a{
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 125ms ease-in-out;
+}
+
+nav a:hover{
+    color: black;
+}
+
+/* when checked looking for any preceeding 'sibling of nav-toggle' */
+.nav-toggle:checked ~ nav{
+    transform: scale(1,1);              
+}
+
+.nav-toggle:checked ~ nav a {
+    opacity: 1;
+    transition: opacity 125ms ease-in-out 125ms;
+}
+
+nav ul li button:hover,
+nav ul li button:active{
+    background-color: rgba(0, 255, 64, 0.644);    
+}
+
+@media screen and (min-width: 800px) {
+    .nav-toggle-label{
+        display: none;
+    }
+    
+    header{
+        display: grid;
+        grid-template-columns: 1fr auto minmax(600px, 3fr) 1fr;
+    }
+
+    .logo{
+        grid-column: 2 / 3;
+    }
+
+    nav{
+        all: unset;
+        grid-column: 3 / 4;
+        display: flex;        
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    nav ul{ 
+        display: flex;       
+        align-items: center;
+    }
+
+    nav li{
+        margin-left: 1em;
+        margin-bottom: 0;
+    }
+
+    nav a{
+        opacity: 1;
+        position: relative;
+    }
+
+    nav a::before {
+        content: '';
+        display: block;
+        height: 3px;
+        background: black;
+        position: absolute;
+        bottom: -0.5em;
+        left: 0;
+        right: 0;
+        transform: scale(0,1);
+        transform-origin: left;
+        transition: transform ease-in-out 150ms;
+        
+    }
+
+    nav a:hover::before {
+        transform: scale(1,1);
+    }    
+}
+
